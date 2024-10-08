@@ -1,11 +1,20 @@
 name: 'Get & cache dependencies'
 #on não é usado pois em actions não é um workflow
 description: 'get dependencies via npm and cache them'
+
+#inputs para controlar o fluxo de cada step
+inputs:
+  caching:
+    description: 'escolha se vai realizar o cache ou não'
+    required: false
+    default: 'true'
 runs:
   using: 'composite'
   steps:
     #action que recupera dependencias e instala
     - name: Cache dependencies
+      #contexto de input para recuperar os inputs declarados nessa action
+      if: inputs.caching == 'true'
       id: cache
       uses: actions/cache@v3
       with:
@@ -13,6 +22,7 @@ runs:
         key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
 
     - name: Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
+      #contexto de input para recuperar os inputs declarados nessa action
+      if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != 'true'
       run: npm ci
       shell: bash #shell usado na action

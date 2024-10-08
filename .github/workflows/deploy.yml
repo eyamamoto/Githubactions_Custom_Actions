@@ -13,8 +13,10 @@ jobs:
       
       #chama a action local via path 
       - name: Load & cache dependencies
-        uses: ./.github/actions/cached-deps #teste
-        #teste
+        uses: ./.github/actions/cached-deps
+        #usa o input da action
+        with:
+          caching: 'false'
 
       - name: Lint code
         run: npm run lint
@@ -42,6 +44,7 @@ jobs:
       - name: Upload test report
         if: failure() && steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v3
+
         with:
           name: test-report
           path: test.json
