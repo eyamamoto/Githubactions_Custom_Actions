@@ -10,8 +10,9 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
       
+      #chama a action local via path 
       - name: Load & cache dependencies
-        uses: 
+        uses: ./.github/actions/cached-deps
 
       - name: Lint code
         run: npm run lint
@@ -84,6 +85,6 @@ jobs:
 
       - name: Output contents
         run: ls
-        
+
       - name: Deploy site
         run: echo "Deploying..."
