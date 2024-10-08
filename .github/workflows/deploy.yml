@@ -13,10 +13,14 @@ jobs:
       
       #chama a action local via path 
       - name: Load & cache dependencies
+        id: cache-deps
         uses: ./.github/actions/cached-deps
         #usa o input da action
         with:
           caching: 'false'
+
+      - name: output information
+        run: echo "cache used output ${{ steps.cache-deps.outputs.used-cache }}"
 
       - name: Lint code
         run: npm run lint
