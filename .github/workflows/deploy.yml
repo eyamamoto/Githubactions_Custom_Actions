@@ -12,7 +12,7 @@ jobs:
       
       #chama a action local via path 
       - name: Load & cache dependencies
-        uses: ./.github/actions/cached-deps
+        uses: ./.github/actions/cached-deps #teste
         #teste
 
       - name: Lint code
